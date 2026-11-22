@@ -1,0 +1,37 @@
+// Prisma Schema for Alok Kumar Vishwas Portfolio
+// Supports PostgreSQL in production (Render, Supabase, Neon)
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  title        String
+  slug         String   @unique
+  description  String
+  technologies String[]
+  imageUrl     String?
+  githubUrl    String?
+  liveUrl      String?
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([featured])
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
